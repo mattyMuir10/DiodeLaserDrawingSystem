@@ -93,16 +93,16 @@ void DiodeLaserDrawingClass::DrawingLoop(){
 	
 	while (1){
 		//welcome and instruct user
-		//memset(printBuffer, 0, sizeof(printBuffer));
-		//sprintf((char*)printBuffer, "Welcome To The Diode Laser Drawer! Type in 'D' to draw, 'M' to move the laser, or 'T' to test the laser\n");
-		//uart_send_string(printBuffer);
+		memset(printBuffer, 0, sizeof(printBuffer));
+		sprintf((char*)printBuffer, "Welcome To The Diode Laser Drawer! Type in 'D' to draw, 'M' to move the laser, or 'T' to test the laser\n");
+		uart_send_string(printBuffer);
 	//wait for input - 'D' means draw
 	while (!uart_read_count());
 	uint8_t currentInput = uart_read();
 	if (currentInput == 'D'){
-		//memset(printBuffer, 0, sizeof(printBuffer));
-		//sprintf((char*)printBuffer, "Type in 8 bits for the width of the drawing\n");
-		//uart_send_string(printBuffer);
+		memset(printBuffer, 0, sizeof(printBuffer));
+		sprintf((char*)printBuffer, "Type in 8 bits for the width of the drawing\n");
+		uart_send_string(printBuffer);
 		//wait for next two bytes which are the width and height
 		uint8_t width = 0;
 		uint8_t height = 0;
@@ -116,9 +116,9 @@ void DiodeLaserDrawingClass::DrawingLoop(){
 			
 		}
 		
-		//memset(printBuffer, 0, sizeof(printBuffer));
-		//sprintf((char*)printBuffer, "Type in 8 bits for the height of the drawing\n");
-		//uart_send_string(printBuffer);
+		memset(printBuffer, 0, sizeof(printBuffer));
+		sprintf((char*)printBuffer, "Type in 8 bits for the height of the drawing\n");
+		uart_send_string(printBuffer);
 		for (int i = 7; i >= 0; i--)
 		{
 			while (!uart_read_count());
@@ -127,9 +127,9 @@ void DiodeLaserDrawingClass::DrawingLoop(){
 			}
 			
 		}
-		//memset(printBuffer, 0, sizeof(printBuffer));
-		//sprintf((char*)printBuffer, "Input all bits for image. 0 is a black pixel and 1 is a white (blank) pixel\n");
-		//uart_send_string(printBuffer);
+		memset(printBuffer, 0, sizeof(printBuffer));
+		sprintf((char*)printBuffer, "Input all bits for image. 0 is a black pixel and 1 is a white (blank) pixel\n");
+		uart_send_string(printBuffer);
 		
 		//rest of bytes are image information (0 = draw, 1 = dont draw)
 		uint32_t totalPixels =  (uint32_t)width * (uint32_t)height;
@@ -177,18 +177,18 @@ void DiodeLaserDrawingClass::DrawingLoop(){
 	//move one of the motors in a specified way
 	else if (currentInput == 'M'){
 		PORTD &= ~(1 << 7);
-		//memset(printBuffer, 0, sizeof(printBuffer));
-		//sprintf((char*)printBuffer, "choose whether you want to move the y-axis ('V') motor or x-axis ('H').\n");
-		//uart_send_string(printBuffer);
+		memset(printBuffer, 0, sizeof(printBuffer));
+		sprintf((char*)printBuffer, "choose whether you want to move the y-axis ('V') motor or x-axis ('H').\n");
+		uart_send_string(printBuffer);
 		while (!uart_read_count());
 		currentInput = uart_read();
 		//move horizontal motor
 		if (currentInput == 'H'){
 			
 			while (!uart_read_count());
-			//memset(printBuffer, 0, sizeof(printBuffer));
-			//sprintf((char*)printBuffer, "Type in '1' to move right or '0' to move left\n");
-			//uart_send_string(printBuffer);
+			memset(printBuffer, 0, sizeof(printBuffer));
+			sprintf((char*)printBuffer, "Type in '1' to move right or '0' to move left\n");
+			uart_send_string(printBuffer);
 			//move forwards
 			if (uart_read() == '1'){
 				uint8_t ended = 0;
@@ -216,9 +216,9 @@ void DiodeLaserDrawingClass::DrawingLoop(){
 			}
 			//move backwards
 			else{
-				//memset(printBuffer, 0, sizeof(printBuffer));
-				//sprintf((char*)printBuffer, "Input bits for the number of steps you would like the motor to take\n");
-				//uart_send_string(printBuffer);
+				memset(printBuffer, 0, sizeof(printBuffer));
+				sprintf((char*)printBuffer, "Input bits for the number of steps you would like the motor to take\n");
+				uart_send_string(printBuffer);
 					uint8_t ended = 0;
 					uint32_t stepsToMove = 0;
 					while(!ended){
@@ -244,13 +244,13 @@ void DiodeLaserDrawingClass::DrawingLoop(){
 		//move vertical motor
 		else if (currentInput == 'V'){
 			PORTD |= (1 << 7);
-			//memset(printBuffer, 0, sizeof(printBuffer));
-			//sprintf((char*)printBuffer, "Type in '1' to move down or '0' to move up\n");
-			//uart_send_string(printBuffer);
+			memset(printBuffer, 0, sizeof(printBuffer));
+			sprintf((char*)printBuffer, "Type in '1' to move down or '0' to move up\n");
+			uart_send_string(printBuffer);
 			while (!uart_read_count());
-			//memset(printBuffer, 0, sizeof(printBuffer));
-			//sprintf((char*)printBuffer, "Input bits for the number of steps you would like the motor to take\n");
-			//uart_send_string(printBuffer);
+			memset(printBuffer, 0, sizeof(printBuffer));
+			sprintf((char*)printBuffer, "Input bits for the number of steps you would like the motor to take\n");
+			uart_send_string(printBuffer);
 				//move forwards
 				if (uart_read() == '1'){
 					PORTD &= ~(1 << 7);
@@ -306,9 +306,9 @@ void DiodeLaserDrawingClass::DrawingLoop(){
 	}
 	//test the used paper with different exposure times to the laser
 	else if (currentInput == 'T'){
-		//memset(printBuffer, 0, sizeof(printBuffer));
-		//sprintf((char*)printBuffer, "Input 8 bits for number of different speeds you would like to test\n");
-		//uart_send_string(printBuffer);
+		memset(printBuffer, 0, sizeof(printBuffer));
+		sprintf((char*)printBuffer, "Input 8 bits for number of different speeds you would like to test\n");
+		uart_send_string(printBuffer);
 		while (!uart_read_count());
 		uint8_t numberOfDifferentTimes = 0;
 		//get the number of different testing times
@@ -323,9 +323,9 @@ void DiodeLaserDrawingClass::DrawingLoop(){
 				numberOfDifferentTimes = numberOfDifferentTimes << 1;
 			}
 		}
-		//memset(printBuffer, 0, sizeof(printBuffer));
-		//sprintf((char*)printBuffer, "Type in 8 bits for each test speed\n");
-		//uart_send_string(printBuffer);
+		memset(printBuffer, 0, sizeof(printBuffer));
+		sprintf((char*)printBuffer, "Type in 8 bits for each test speed\n");
+		uart_send_string(printBuffer);
 		//get the testing times
 		uint8_t testingTimes[numberOfDifferentTimes] = {0};
 		for (int i = 0; i < numberOfDifferentTimes; i++){
