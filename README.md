@@ -1,2 +1,2 @@
 # DiodeLaserDrawingSystem
-Used some stepper motors, a violet diode laser, timing belts and gears to create a 2d diode laser drawing system. 
+Used some stepper motors, a violet diode laser, timing belts and gears to create a 2d diode laser drawing system with a Atmega 328p. 
